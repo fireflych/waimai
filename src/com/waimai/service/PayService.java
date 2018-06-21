@@ -8,6 +8,12 @@ import com.waimai.entity.Order;
 public class PayService {
 	private PayDao payDao;
 
+	
+	
+	public PayService() {
+		super();
+		this.payDao = new PayDao();
+	}
 	public void pay(List<Order> orders) throws Exception{
 		payDao.pay(orders);
 	}

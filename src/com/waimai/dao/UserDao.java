@@ -10,7 +10,7 @@ import com.waimai.entity.User;
 
 public class UserDao {
 	
-	public User showUser(String userId) throws ClassNotFoundException, SQLException{
+	public User showUser(String userId) throws Exception{
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		String sql = "select * from user where userid=?";
@@ -45,7 +45,7 @@ public class UserDao {
 	 * @throws SQLException 
 	 * @throws ClassNotFoundException 
 	 */
-	public void addUser(User user) throws ClassNotFoundException, SQLException{
+	public void addUser(User user) throws Exception{
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		String sql = "insert into user values(?,?,?,?,?,?,?,?)";
@@ -76,7 +76,7 @@ public class UserDao {
 	 * @throws ClassNotFoundException 
 	 * @throws SQLException 
 	 */
-	public User getUser(String userPhone,String userPassword) throws ClassNotFoundException, SQLException{
+	public User getUser(String userPhone,String userPassword) throws Exception{
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		String sql = "select * from user where userphone=? and userpassword=?";
@@ -106,7 +106,7 @@ public class UserDao {
 		con.close();
 		return dbUser == null?null:dbUser;
 	}
-	public void userRegister(User user) throws SQLException, ClassNotFoundException{
+	public void userRegister(User user) throws Exception{
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		String sql = "insert into user values(?,?,?,?,?,?,?,?)";

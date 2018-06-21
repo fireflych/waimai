@@ -10,6 +10,11 @@ import com.waimai.entity.Product;
 public class OrderManagerService {
 	private OrderManagerDao orderManagerDao;
 	
+	public OrderManagerService() {
+		super();
+		this.orderManagerDao = new OrderManagerDao();
+	}
+	
 	public void submitComment(Comment comment,String orderId) throws Exception{
 		orderManagerDao.submitComment(comment,orderId);
 	}

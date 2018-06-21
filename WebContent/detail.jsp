@@ -1,7 +1,8 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"	pageEncoding="utf-8"%>
+<%@ page language="java" import="java.util.List,com.waimai.entity.*"contentType="text/html; charset=utf-8"	pageEncoding="utf-8"%>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+List<Comment> comments = (List<Comment>) request.getSession().getAttribute("comments");
 %>
 
 	
@@ -82,20 +83,20 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		</div>
 		<div class="col-md-12">
 			<ul>
-				<s:iterator value="comments" var="comment">
+				<% for(Comment c: comments) {%>
 					<li class="comment-content">
 					<div class="clearfix" style="color: #898989;height: 15px;line-height: 15px;vertical-align: top;">
-					<span class="fr" style="margin-right: 15px;color:#898989;height: 15px;line-height: 15px;vertical-align: top;">评价时间  ${comment.commentDate}</span>
-					<span style="color: #898989;;font-size: 14px;margin-right: 15px;padding: 0 15px;">${comment.user.userNickName }</span>
+					<span class="fr" style="margin-right: 15px;color:#898989;height: 15px;line-height: 15px;vertical-align: top;">评价时间 <%=c.getCommentDate() %></span>
+					<span style="color: #898989;;font-size: 14px;margin-right: 15px;padding: 0 15px;"><%=c.getUser().getUserNickName() %></span>
 					<span>总体评价：</span>
 					<span class="star black-star">
-						<span class="star-score" style="width: {{${comment.commentCore}*14.4}}px"></span>
+						<span class="star-score" style="width: {{<%=c.getCommentCore() %>*14.4}}px"></span>
 					</span>
-					<span style="margin-left: 10px;">${comment.commentCore}分</span>
+					<span style="margin-left: 10px;"><%=c.getCommentCore() %>分</span>
 					</div>
-					<div class="user-reply">${comment.commentContent}</div>
+					<div class="user-reply"><%=c.getCommentContent() %></div>
 					</li>
-				</s:iterator>
+				<% }%>
 			</ul>
 		</div>
 		</div>

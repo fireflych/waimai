@@ -6,35 +6,26 @@ import com.waimai.dao.UserDao;
 import com.waimai.entity.User;
 
 public class UserService {
-
-	private UserDao userDao;
 	
-	public User showUser(String userId) throws ClassNotFoundException, SQLException{
+	public User showUser(String userId) throws Exception{
+		UserDao userDao = new UserDao();
 		return userDao.showUser(userId);
 	}
 
-	public void addUser(User user) throws ClassNotFoundException, SQLException{
+	public void addUser(User user) throws Exception{
+		UserDao userDao = new UserDao();
 		userDao.addUser(user);
 	}
 
-	public User userLogin(String userPhone,String userPassword) throws ClassNotFoundException, SQLException{
+	public User userLogin(String userPhone,String userPassword) throws Exception{
+		UserDao userDao = new UserDao();
 		User user = userDao.getUser(userPhone, userPassword);
 		if(user != null) user.setUserPassword(null);
 		return user;
 	}
 	
-	public void userRegister(User user) throws ClassNotFoundException, SQLException{
+	public void userRegister(User user) throws Exception{
+		UserDao userDao = new UserDao();
 		userDao.userRegister(user);
 	}
-/* 
- 	===============================Getter Setter Constructor=====================================
-*/
-	public UserDao getUserDao() {
-		return userDao;
-	}
-
-	public void setUserDao(UserDao userDao) {
-		this.userDao = userDao;
-	}
-	
 }

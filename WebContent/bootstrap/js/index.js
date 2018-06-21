@@ -214,7 +214,7 @@ indexapp.controller('register',function($scope,$http){
 	};
 	$scope.userregister=function(user){		
 		var url="userRegister?userPhone="+user.phone+"&userPassword="+user.password;
-		$http.post(url).success( function(response) {
+		$http.get(url).success( function(response) {
 			if("success" == response){
 				alert("注册成功");
 				$('#modal-login').modal('hide');

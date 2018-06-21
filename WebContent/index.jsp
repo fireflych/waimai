@@ -1,15 +1,16 @@
-<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%> 
+<%@ page language="java" import="java.util.*,com.waimai.entity.*" pageEncoding="UTF-8"%> 
 <%@ page contentType="text/html;charset=UTF-8" %> 
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+User user = (User) request.getSession().getAttribute("user");
 %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-<title>Examples</title>
+<title>外卖订餐</title>
 <meta name="description" content="">
 <meta name="keywords" content="">
 <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
@@ -20,6 +21,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <link rel="stylesheet" href="bootstrap/css/bootstrap-theme.min.css">
 <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
 <script src="bootstrap/js/bootstrap.min.js"></script>
+<script src="bootstrap/js/angular.min.js"></script>
+<script src="bootstrap/js/angular-ui-router.js"></script>
+<script src="bootstrap/js/ng-file-upload.min.js"></script>
+<script src="bootstrap/js/ng-file-upload-shim.min.js"></script>
+<script src="bootstrap/js/index.js"></script>
+<script src="bootstrap/js/cart.js"></script>
 <link rel="stylesheet" href="css/index.css">
 <link rel="stylesheet" href="css/good.css">
 <link rel="stylesheet" href="css/user.css">
@@ -38,22 +45,20 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	
 	<div class="row" ng-controller="sessionctrl"> <!-- 第一行 -->
 		<div class="col-md-2 col-md-offset-10"><h5>
-		 <s:if test=" #session.user==null">
+		 <% if(user == null) {%>
 		 <a href="#"data-toggle="modal" data-target="#modal-register">注册</a> <a>|</a> <a href="#" data-toggle="modal" data-target="#modal-login">登陆</a>
-		 </s:if>  
-		 <s:else>
-		 <a href="#/myMessage">${session.user.userPhone } </a> <a>|</a> <a href="#" ng-click="logout()">注销</a>
-		 </s:else>
+		 <%} else {%>  
+		 <a href="#/myMessage"><%=user.getUserPhone() %></a> <a>|</a> <a href="#" ng-click="logout()">注销</a>
+		 <%} %>
 			</h5></div>
 	</div>
 	<div class="row  navber-default navbar aa" style="margin-top:0px;margin-bottom:16px"><!-- 第二行 -->
-		<div class="col-md-3 navbar-header "><h2 style="margin-bottom:15px;margin-top: 15px;margin-left:15px;"><a href="#" class="nav-brand">想吃</a></h2></div>
+		<div class="col-md-3 navbar-header "><h2 style="margin-bottom:15px;margin-top: 15px;margin-left:15px;"><a href="#" class="nav-brand">外卖订餐</a></h2></div>
 		<div class="col-md-5" style="margin-top:0.9%">
 			<ul class="nav nav-pills" style="margin-top:4px">			
 				<li><a href="#/"><h4>首页</h4></a></li>
 				<li><a href="#/allgoods"><h4>全部商品</h4></a></li>
 				<li><a href="#/allshop"><h4>所有卖家</h4></a></li>
-				<li><a href="#"><h4>积分兑换</h4></a></li>
 			</ul>
 		</div>
 		<div class="col-md-3" style="margin-top:1.5%;padding-right:0%">
@@ -67,12 +72,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             </form>
 		</div>
 		<div class="col-md-1 collapse navbar-collapse" style="width:95px"><a href="#">
-			<div class="thumbnail qrshow" style="margin-top:20%;margin-bottom:-20%;position:relative">
-				<img src="images/small-qr.png" style="width: 30px; height: 30px;">
-				<div class="qrhidden" id="qrimage" style="position:absolute;top:165%;right:-6%;z-index:1">
-					<img src="images/qr.png" alt="" style="width:96px;height:96px">
-				</div>
-			</div></a>
+			
 		</div>		
 	</div>	
 	<div ui-view="content"></div>
@@ -80,7 +80,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 <div class="footer">
 	<div class="copyright">
-	©2016 google.cn<a href="#" target="_blank">京ICP证20160828号</a>京公网安备201602281708号
 	</div>
 </div>
 <!-- 注册框 开始-->
@@ -154,7 +153,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		<div class="row form-group" >
 			<div class="col-sm-8  col-sm-offset-2">
 				<!-- <span class="input-group-addon glyphicon glyphicon-user"></span> -->
-				<input type="password" id="login-phone" class="form-control input-sm" placeholder="密码" ng-model="user.password" required>
+				<input type="password" id="login-password" class="form-control input-sm" placeholder="密码" ng-model="user.password" required>
 			</div>
 		</div>
         <!-- 主体结束-->
@@ -168,10 +167,4 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 <!-- 登录框 结束 -->
 </body>
-<script src="bootstrap/js/angular.min.js"></script>
-<script src="bootstrap/js/angular-ui-router.js"></script>
-<script src="bootstrap/js/ng-file-upload.min.js"></script>
-<script src="bootstrap/js/ng-file-upload-shim.min.js"></script>
-<script src="bootstrap/js/index.js"></script>
-<script src="bootstrap/js/cart.js"></script>
 </html>

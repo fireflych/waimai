@@ -1,9 +1,11 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"	pageEncoding="utf-8"%>
+<%@ page language="java" import="java.util.*,com.waimai.entity.*" contentType="text/html; charset=utf-8"	pageEncoding="utf-8"%>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+User user = (User) request.getSession().getAttribute("user");
+List<Order> orders = (List<Order>) request.getSession().getAttribute("orders");
 %>
-<div> <s:if test="#session.user != null">
+<div> <% if(user != null) {%>
 						<table class="table table-hover">
 							<thead>
 							<tr>
@@ -14,14 +16,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 							</tr>
 							</thead>
 							<tbody>
-							<s:iterator value="orders" var="o">
+							<% for(Order o: orders) {%>
 								<tr>
-									<td><a href="#/myMessage/showUserOrder/${o.orderNum}">${o.productName}等...</a></td>
-									<td>1份</td>
-									<td>￥${o.orderPrice}</td>
-									<td><s:if test="#o.orderIsComment == true">已评价</s:if><s:else>未评价</s:else> </td>
+									<td><a href="#/myMessage/showUserOrder/<%=o.getOrderNum() %>"><%=o.getProductName() %>等...</a></td>
+									<td><%=o.getProductCount() %>1份</td>
+									<td><%=o.getOrderPrice() %></td>
+									<td><% if(o.getOrderIsComment() == true) {%>已评价<% } else {%>未评价<%} %> </td>
 								</tr>
-							</s:iterator>
+							<% } %>
 							</tbody>
-						</table></s:if>
+						</table><% }%>
 					</div>

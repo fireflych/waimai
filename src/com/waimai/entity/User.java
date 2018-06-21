@@ -22,6 +22,9 @@ public class User {
 		this.userPassword = userPassword;
 		this.userPhone = userPhone;
 		this.userCreateTime = userCreateTime;
+		this.userLoginName = "test";
+		this.userTrueName = "ZJH";
+		this.userAddress = "ZHKU";
 	}
 
 	public User(String userId, String userLoginName, String userNickName,

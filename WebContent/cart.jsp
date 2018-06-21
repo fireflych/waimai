@@ -1,8 +1,9 @@
-<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%> 
+<%@ page language="java" import="java.util.*,com.waimai.entity.*" pageEncoding="UTF-8"%> 
 <%@ page contentType="text/html;charset=UTF-8" %> 
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+List<Product> products = (List<Product>) request.getSession().getAttribute("products");
 %>
 
 	<div class="aa"style="margin-bottom:16px;margin-left:20px;margin-right:18px;"   ng-controller="shoppingcart">
@@ -51,9 +52,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				</div>
 				<div style="padding-left:35px;">
 					<ul class="list-unstyled list-inline fontsize14">
-					<s:iterator value="products" var="product">
-						<li><a href="#/detail/${product.productId}"><div style="padding:10px 10px 2px 10px;border: 2px solid #ebebeb;" class="good-hover-white"><img src="${product.productImgUrl}" style="width:150px;height:100px;margin-bottom:2px;"><dl><dt style="font-weight:500;font-size:17px;">${product.productName}</dt><dd style="margin-bottom:-5px;"><span style="color: #f76120;font-size:22px">&yen;${product.productCurrentPrize}<span style="float:right;margin-top:-4px;"><img src="images/addcart.png" style="wdith:24px;height:24px;" showgoodnum="${product.productId}" showgoodname="${product.productName}" showgoodprice="${product.productCurrentPrize}" shopid="${shop.memberId}" showgood></span></span></dd></dl></div></a></li>
-					</s:iterator>
+					<% for(Product p: products) { %>
+						<li><a href="#/detail/<%=p.getProductId() %>"><div style="padding:10px 10px 2px 10px;border: 2px solid #ebebeb;" class="good-hover-white"><img src="<%=p.getProductImgUrl() %>" style="width:150px;height:100px;margin-bottom:2px;"><dl><dt style="font-weight:500;font-size:17px;"><%=p.getProductName() %></dt><dd style="margin-bottom:-5px;"><span style="color: #f76120;font-size:22px">&yen;<%=p.getProductCurrentPrize() %><span style="float:right;margin-top:-4px;"><img src="images/addcart.png" style="wdith:24px;height:24px;" showgoodnum="<%=p.getProductId() %>" showgoodname="<%= p.getProductName() %>" showgoodprice="<%=p.getProductCurrentPrize() %>" shopid="<%=p.getMember().getMemberId() %>" showgood></span></span></dd></dl></div></a></li>
+					<% } %>
 					</ul>
 				</div>
 			</div>

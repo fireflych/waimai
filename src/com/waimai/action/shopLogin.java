@@ -1,30 +1,26 @@
 package com.waimai.action;
 
 import java.io.IOException;
-import java.sql.SQLException;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.waimai.entity.User;
-import com.waimai.service.UserService;
-import com.waimai.util.DateUtil;
-import com.waimai.util.UuidUtil;
+import com.waimai.service.ShopService;
+import com.waimai.entity.Member;
 
 /**
- * Servlet implementation class userRegister
+ * Servlet implementation class shopLogin
  */
-@WebServlet("/userRegister")
-public class userRegister extends HttpServlet {
+@WebServlet("/shopLogin")
+public class shopLogin extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public userRegister() {
+    public shopLogin() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -33,21 +29,19 @@ public class userRegister extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		UserService userService = new UserService();
-		String userPhone;
-		String userPassword;
-		String registerState;
+		String shopLoginState;
+		Member shop;
+		String shopPhone = null;
+		String shopPassword = null;
+		ShopService shopService = null;
 		
-		userPhone = request.getParameter("userPhone");
-		userPassword = request.getParameter("userPassword");
-		
-		User user = new User(UuidUtil.getUUID(),userPhone,userPassword,userPhone,DateUtil.getStringDate());
+		shopLoginState="";
+		shopService = new ShopService();
+		shopPhone = request.getParameter("shopPhone");
+		shopPassword = request.getParameter("shopPassword");
 		try {
-			System.out.println("loginact!!!!!!!"+user.getUserPhone());
-			userService.userRegister(user);
-			registerState = "success";
-			request.getSession().setAttribute("user", user);
-			response.getWriter().append("success");
+			Member m = shopService.shopLogin(shopPhone,shopPassword);
+			request.getSession().setAttribute("shop", m);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

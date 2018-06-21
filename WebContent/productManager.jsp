@@ -1,9 +1,11 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"	pageEncoding="utf-8"%>
+<%@ page language="java" import="java.util.*,com.waimai.entity.*" contentType="text/html; charset=utf-8"	pageEncoding="utf-8"%>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+Member member = (Member)request.getSession().getAttribute("shop");
+List<Product> products = (List<Product>) request.getSession().getAttribute("products");
 %>
-<div> <s:if test="#session.shop != null">
+<div> <% if( member != null ) {%>
 						<table class="table table-hover">
 							<thead>
 							<tr>
@@ -15,15 +17,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 							</tr>
 							</thead>
 							<tbody>
-							<s:iterator value="products" var="p">
+							<% for(Product p: products) {%>
 								<tr>
-									<td>${p.productName}</td>
-									<td>￥${p.productCurrentPrize}</td>
-									<td>￥${p.productOriginalPrize}</td>
-									<td>${p.productSellNum}</td>
+									<td><%=p.getProductName() %></td>
+									<td><%=p.getProductCurrentPrize() %></td>
+									<td><%=p.getProductOriginalPrize() %></td>
+									<td><%=p.getProductSellNum() %></td>
 									<td>修改</td>
 								</tr>
-							</s:iterator>
+							<% } %>
 							</tbody>
-						</table></s:if>
+						</table><%} %>
 					</div>

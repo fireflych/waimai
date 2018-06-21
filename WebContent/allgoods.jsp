@@ -1,7 +1,9 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"	pageEncoding="utf-8"%>
+<%@ page language="java" import="java.util.List,com.waimai.entity.*"contentType="text/html; charset=utf-8"	pageEncoding="utf-8"%>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+List<Category> categorys = (List<Category>) request.getSession().getAttribute("categorys");
+List<Area> areas = (List<Area>) request.getSession().getAttribute("areas");
 %>
 <div class="aa"style="margin-bottom:16px;margin-left:-15px;margin-right:-15px;">
 	<div class="row cannot_select"> <!-- 第三行 -->
@@ -10,9 +12,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		</div>
 		<div class="col-md-10 ">
 			<ul class="list-unstyled list-inline fontsize14">
-				<s:iterator value="categorys" var="category">
-				<li><a href="#/allgoods/category/${category.categoryId}">${category.categoryName}</a></li>
-				</s:iterator>
+				<% for(Category c: categorys) {%>
+				<li><a href="#/allgoods/category/<%= c.getCategoryId() %>>"><%= c.getCategoryName() %></a></li>
+				<% } %>>
 			</ul>			  
 		</div>
 	</div>
@@ -23,9 +25,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		</div>
 		<div class="col-md-10 ">
 			<ul class="list-unstyled list-inline fontsize14">
-				<s:iterator value="areas" var="area">
-				<li><a href="#/allgoods/area/${area.areaId}">${area.areaName}</a></li>
-				</s:iterator>
+				<% for(Area a: areas ) { %>>
+				<li><a href="#/allgoods/area/<%= a.getAreaId() %>"><%= a.getAreaName() %></a></li>
+				<%} %>
 			</ul>		
 		</div>
 	</div>

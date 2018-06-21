@@ -1,8 +1,9 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"	pageEncoding="utf-8"%>
+<%@ page language="java" import="java.util.List,com.waimai.entity.Category" contentType="text/html; charset=utf-8"	pageEncoding="utf-8"%>
 
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+List<Category> categorys = (List<Category>) request.getSession().getAttribute("categorys");
 %>
 
           <div ng-controller="addProduct">
@@ -18,9 +19,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                <div class="form-group">
                 <label for="producttittle">商品类别：</label>
                <select  id="producttittle" ng-model="product.category">
-                 <s:iterator value="categorys" var="c">
-                 <option value="${c.categoryId}">${c.categoryName}</option>
-                 </s:iterator>
+                 <% for(Category c: categorys) {%>
+                 <option value="<%= c.getCategoryId() %>>"><%= c.getCategoryName() %>></option>
+                 <% } %>
                </select>
               </div>
                <div class="form-group" style="display: inline-block; width:120px;">

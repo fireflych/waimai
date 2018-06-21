@@ -1,7 +1,8 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"	pageEncoding="utf-8"%>
+<%@ page language="java" import="java.util.*,com.waimai.entity.*" contentType="text/html; charset=utf-8"	pageEncoding="utf-8"%>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+List<Member> shops = (List<Member>) request.getSession().getAttribute("shops");
 %>
 
 	<div class="aa"style="margin-bottom:16px;margin-left:20px;margin-right:18px;">
@@ -17,9 +18,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			
 				<div class="col-md-10 aa">
 					<ul class="list-unstyled list-inline fontsize14">
-					<s:iterator value="shops" var="s">
-						<li><a href="#/cart/${s.memberId}"><div><img src="${s.shopImgUrl}" style="width:180px;height:130px" class="img-rounded"><span><dl><dt>${s.shopName}</dt><dd>${s.shopAdress}</dd></dl></span></div></a></li>
-					</s:iterator>
+					<% for(Member s: shops) {%>
+						<li><a href="#/cart/<%=s.getMemberId()%>"><div><img src="<%=s.getShopImgUrl() %>" style="width:180px;height:130px" class="img-rounded"><span><dl><dt><%=s.getShopName() %></dt><dd><%=s.getShopAdress() %></dd></dl></span></div></a></li>
+					<% } %>
 						<!-- <div class="good-line" style="width:830px;float:left;margin-bottom:20px;"></div> -->
 						</ul>	
 					</div>	

@@ -44,7 +44,7 @@ public class userLogin extends HttpServlet {
 		
 		try {
 			u = userService.userLogin(userPhone, userPassword);
-		} catch (ClassNotFoundException | SQLException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
